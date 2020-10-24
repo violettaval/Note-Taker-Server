@@ -2,7 +2,7 @@ var express = require("express");
 var app = express();
 var database = require("./db/db.json");
 const fs = require("fs");
-var index = 0; //makes id's
+var index = 1; //makes id's
 var PORT = process.env.PORT || 8080;
 
 app.use(express.static('public'));
@@ -17,18 +17,15 @@ app.post("/api/notes", function (req, res) {
   req.body.id = index;
   index++;
   database.push(req.body);
-  console.log(database);
   fs.writeFileSync("./db/db.json", JSON.stringify(database));
   res.json(req.body);
 });
 
 app.delete("/api/notes/:id", function (req, res) {
-  var chosen = parseInt(req.params.id);
-  console.log(chosen);
+  var selection = parseInt(req.params.id);
   for (var i = 0; i < database.length; i++) {
-    if (chosen === database[i].id) {
+    if (selection === database[i].id) {
       database.splice(i, 1);
-      console.log(database);
       fs.writeFileSync("./db/db.json", JSON.stringify(database));
       return res.status(200).end();
     }
