@@ -3,13 +3,13 @@ var database = require("../db/db.json");
 module.exports = function(app) {
 
   app.get("/api/notes", function (req, res) {
-    res.json(database);
+    return res.json(database);
   });
 
   app.post("/api/notes", function (req, res) {
     database.push(req);
     console.log(database);
-    res.json(database);
+    return res.json(database);
   });
 
   app.delete("/api/notes/:id", function (req, res) {
@@ -21,10 +21,10 @@ module.exports = function(app) {
         console.log(database);
       }
     }
-    res.json(database);
+    return res.json(database);
   });
   app.post("/api/notes/clearall", function (req, res) {
     database.length = 0;
-    res.json(database);
+    return res.json(database);
   });
 };
